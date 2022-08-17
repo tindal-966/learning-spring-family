@@ -3,10 +3,7 @@ package geektime.spring.springbucks.customer;
 import geektime.spring.springbucks.customer.model.Coffee;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.Banner;
-import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -25,17 +22,18 @@ public class CustomerServiceApplication implements ApplicationRunner {
 	private RestTemplate restTemplate;
 
 	public static void main(String[] args) {
+		// SpringApplication.run(CustomerServiceApplication.class, args); // 一般情况下
+
 		new SpringApplicationBuilder()
 				.sources(CustomerServiceApplication.class)
-				.bannerMode(Banner.Mode.OFF)
-				.web(WebApplicationType.NONE)
+				.web(WebApplicationType.NONE) // 主要是这里，不会以 Tomcat 形式启动（SERVICE 才会）（这里非 web 却引入 web 一是为了使用有关的类，二是为了使用自动配置的 RestTemplateBuilder）
 				.run(args);
 	}
 
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 //		return new RestTemplate();
-		return builder.build();
+		return builder.build(); // 入参的 builder 来自类 RestTemplateAutoConfiguration
 	}
 
 	@Override
