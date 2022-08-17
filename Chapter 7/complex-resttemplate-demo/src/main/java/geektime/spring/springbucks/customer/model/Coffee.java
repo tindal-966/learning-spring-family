@@ -16,7 +16,7 @@ import java.util.Date;
 public class Coffee implements Serializable {
     private Long id;
     private String name;
-    private Money price;
+    private Money price; // 这里使用了 Money 类型，在 JSON Serializer/Deserializer 时需要做额外的处理，见 support 包
     private Date createTime;
     private Date updateTime;
 }

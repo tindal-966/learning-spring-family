@@ -67,9 +67,9 @@ public class CustomerServiceApplication implements ApplicationRunner {
 		log.info("New Coffee: {}", response);
 
 		ParameterizedTypeReference<List<Coffee>> ptr =
-				new ParameterizedTypeReference<List<Coffee>>() {};
+				new ParameterizedTypeReference<List<Coffee>>() {}; // 指定 ResponseType
 		ResponseEntity<List<Coffee>> list = restTemplate
-				.exchange(coffeeUri, HttpMethod.GET, null, ptr);
+				.exchange(coffeeUri, HttpMethod.GET, null, ptr); // 不能直接使用类似 List<Coffee> list = new ArrayList<>; restTemplate.getForObject(coffeeUri, list.class) 来代替（报错 LinkedHashMap 不能转成 Coffee）
 		list.getBody().forEach(c -> log.info("Coffee: {}", c));
 	}
 }
