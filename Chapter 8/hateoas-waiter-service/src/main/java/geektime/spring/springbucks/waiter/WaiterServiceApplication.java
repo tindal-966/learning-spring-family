@@ -16,6 +16,7 @@ public class WaiterServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WaiterServiceApplication.class, args);
 	}
+
 	@Bean
 	public Hibernate5Module hibernate5Module() {
 		return new Hibernate5Module();
@@ -24,7 +25,7 @@ public class WaiterServiceApplication {
 	@Bean
 	public Jackson2ObjectMapperBuilderCustomizer jacksonBuilderCustomizer() {
 		return builder -> {
-			builder.indentOutput(true);
+			builder.indentOutput(true); // 缩进
 			builder.timeZone(TimeZone.getTimeZone("Asia/Shanghai"));
 		};
 	}
