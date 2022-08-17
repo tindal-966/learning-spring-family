@@ -33,13 +33,13 @@ public class WebclientDemoApplication implements ApplicationRunner {
 	}
 
 	@Bean
-	public WebClient webClient(WebClient.Builder builder) {
+	public WebClient webClient(WebClient.Builder builder) { // builder 来源于 WebClientAutoConfiguration
 		return builder.baseUrl("http://localhost:8080").build();
 	}
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		CountDownLatch cdl = new CountDownLatch(2);
+		CountDownLatch cdl = new CountDownLatch(2); // todo ???
 
 		webClient.get()
 				.uri("/coffee/{id}", 1)
@@ -49,7 +49,7 @@ public class WebclientDemoApplication implements ApplicationRunner {
 				.doOnError(t -> log.error("Error: ", t))
 				.doFinally(s -> cdl.countDown())
 				.subscribeOn(Schedulers.single())
-				.subscribe(c -> log.info("Coffee 1: {}", c));
+				.subscribe(c -> log.info("Coffee 1: {}", c));// todo ???
 
 		Mono<Coffee> americano = Mono.just(
 				Coffee.builder()
