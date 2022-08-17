@@ -9,6 +9,9 @@ import org.apache.http.protocol.HttpContext;
 
 import java.util.Arrays;
 
+/**
+ * 设置请求时的 KeepAlive 策略
+ */
 public class CustomConnectionKeepAliveStrategy implements ConnectionKeepAliveStrategy {
     private final long DEFAULT_SECONDS = 30;
 

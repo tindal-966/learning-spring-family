@@ -46,7 +46,7 @@ public class CustomerServiceApplication implements ApplicationRunner {
 	}
 
 	@Bean
-	public HttpComponentsClientHttpRequestFactory requestFactory() {
+	public HttpComponentsClientHttpRequestFactory requestFactory() { // 不再使用默认的 SimpleClientHttpRequestFactory
 		PoolingHttpClientConnectionManager connectionManager =
 				new PoolingHttpClientConnectionManager(30, TimeUnit.SECONDS);
 		connectionManager.setMaxTotal(200);
@@ -55,7 +55,7 @@ public class CustomerServiceApplication implements ApplicationRunner {
 		CloseableHttpClient httpClient = HttpClients.custom()
 				.setConnectionManager(connectionManager)
 				.evictIdleConnections(30, TimeUnit.SECONDS)
-				.disableAutomaticRetries()
+				.disableAutomaticRetries() // 禁止自动重试
 				// 有 Keep-Alive 认里面的值，没有的话永久有效
 				//.setKeepAliveStrategy(DefaultConnectionKeepAliveStrategy.INSTANCE)
 				// 换成自定义的
@@ -73,9 +73,9 @@ public class CustomerServiceApplication implements ApplicationRunner {
 //		return new RestTemplate();
 
 		return builder
-				.setConnectTimeout(Duration.ofMillis(100))
-				.setReadTimeout(Duration.ofMillis(500))
-				.requestFactory(this::requestFactory)
+				.setConnectTimeout(Duration.ofMillis(100)) // 连接超时
+				.setReadTimeout(Duration.ofMillis(500)) // 读取超时
+				.requestFactory(this::requestFactory)  // 使用 Apache HttpComponents
 				.build();
 	}
 
