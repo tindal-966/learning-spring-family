@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 @SpringBootApplication
 @RestController
-@EnableRedisHttpSession
+@EnableRedisHttpSession // 启用
 public class SessionDemoApplication {
 
 	public static void main(String[] args) {
