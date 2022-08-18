@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+/**
+ * 返回类型不是 Mono 就是 Flux
+ */
 @Service
 public class CoffeeService {
     @Autowired

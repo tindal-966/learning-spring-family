@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.TimeZone;
 
 @SpringBootApplication
-@EnableR2dbcRepositories
+@EnableR2dbcRepositories // 启用 R2DBC 数据源
 public class WaiterServiceApplication extends AbstractR2dbcConfiguration {
 
 	public static void main(String[] args) {

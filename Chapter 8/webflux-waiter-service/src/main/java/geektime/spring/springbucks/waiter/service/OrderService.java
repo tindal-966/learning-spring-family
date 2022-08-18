@@ -12,6 +12,9 @@ import reactor.core.publisher.Mono;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 返回类型不是 Mono 就是 Flux
+ */
 @Service
 public class OrderService {
     @Autowired
