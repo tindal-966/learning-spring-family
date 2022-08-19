@@ -36,6 +36,9 @@ public class CustomerServiceApplication {
 				.run(args);
 	}
 
+	/**
+	 * 配置 OkHttpClient 支持 HTTP/2
+	 */
 	@Bean
 	public ClientHttpRequestFactory requestFactory() {
 		OkHttpClient okHttpClient = null;
@@ -44,6 +47,7 @@ public class CustomerServiceApplication {
 			keyStore.load(this.keyStore.getInputStream(), keyPass.toCharArray());
 			TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
 			tmf.init(keyStore);
+
 			SSLContext sslContext = SSLContext.getInstance("TLS");
 			sslContext.init(null, tmf.getTrustManagers(), null);
 
