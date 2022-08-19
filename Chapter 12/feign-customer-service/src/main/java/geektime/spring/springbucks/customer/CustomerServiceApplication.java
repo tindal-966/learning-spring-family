@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 @SpringBootApplication
 @Slf4j
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients // 启用 FeignClients
 public class CustomerServiceApplication {
 
 	public static void main(String[] args) {
@@ -29,7 +29,7 @@ public class CustomerServiceApplication {
 				.evictIdleConnections(30, TimeUnit.SECONDS)
 				.setMaxConnTotal(200)
 				.setMaxConnPerRoute(20)
-				.disableAutomaticRetries()
+				.disableAutomaticRetries() // 取消重试
 				.setKeepAliveStrategy(new CustomConnectionKeepAliveStrategy())
 				.build();
 	}

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "waiter-service", contextId = "coffeeOrder")
+@FeignClient(name = "waiter-service", contextId = "coffeeOrder") // 指定为 Feign 接口，contextId 用于区分同一个 service 下的服务
 public interface CoffeeOrderService {
     @GetMapping("/order/{id}")
     CoffeeOrder getOrder(@PathVariable("id") Long id);

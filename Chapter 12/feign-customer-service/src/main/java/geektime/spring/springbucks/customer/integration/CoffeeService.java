@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient(name = "waiter-service", contextId = "coffee", path = "/coffee")
+@FeignClient(name = "waiter-service", contextId = "coffee", path = "/coffee") // 指定为 Feign 接口，其中 path 作用等同于 @RequestMapping
 // 不要在接口上加@RequestMapping
 public interface CoffeeService {
     @GetMapping(path = "/", params = "!name")
