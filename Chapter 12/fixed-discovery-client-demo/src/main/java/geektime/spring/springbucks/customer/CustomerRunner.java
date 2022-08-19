@@ -25,7 +25,7 @@ public class CustomerRunner implements ApplicationRunner {
     @Autowired
     private RestTemplate restTemplate;
     @Autowired
-    private DiscoveryClient discoveryClient;
+    private DiscoveryClient discoveryClient; // 注入的是自定义的 FixedDiscoveryClient
 
     @Override
     public void run(ApplicationArguments args) throws Exception {

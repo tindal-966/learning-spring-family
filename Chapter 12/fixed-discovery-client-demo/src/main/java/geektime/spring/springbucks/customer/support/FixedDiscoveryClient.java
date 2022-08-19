@@ -10,11 +10,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 自定义的 DiscoveryClient
+ */
 @ConfigurationProperties("waiter")
 @Setter
 public class FixedDiscoveryClient implements DiscoveryClient {
     public static final String SERVICE_ID = "waiter-service";
-    // waiter.services
+    // waiter.services 内容来源于配置文件（相当于注册中心已经注册上了这些内容）
     private List<String> services;
 
     @Override

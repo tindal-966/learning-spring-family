@@ -7,6 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 自定义 LoadBalancerClient
+ *
+ * 会被 RibbonClientConfiguration 调用
+ */
 public class FixedServerList implements ServerList<Server> {
     @Autowired
     private FixedDiscoveryClient discoveryClient;

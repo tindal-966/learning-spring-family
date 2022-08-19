@@ -29,12 +29,12 @@ public class CustomerServiceApplication {
         SpringApplication.run(CustomerServiceApplication.class, args);
     }
 
-    @Bean
+    @Bean // 注册 Bean
     public DiscoveryClient fixedDiscoveryClient() {
         return new FixedDiscoveryClient();
     }
 
-    @Bean
+    @Bean // 注册 Bean
     public FixedServerList fixedServerList() {
         return new FixedServerList();
     }

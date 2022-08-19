@@ -30,7 +30,7 @@
         </dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId> <!-- 只引入了这个，没有其他的 discovery 之类的 starter -->
 		</dependency>
 
 		<dependency>
