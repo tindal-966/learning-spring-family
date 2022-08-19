@@ -46,6 +46,7 @@ public class CustomerRunner implements ApplicationRunner {
         ParameterizedTypeReference<List<Coffee>> ptr =
                 new ParameterizedTypeReference<List<Coffee>>() {};
         ResponseEntity<List<Coffee>> list = restTemplate
+                // 原来 IP+Host 改成服务名访问
                 .exchange("http://waiter-service/coffee/", HttpMethod.GET, null, ptr);
         list.getBody().forEach(c -> log.info("Coffee: {}", c));
     }

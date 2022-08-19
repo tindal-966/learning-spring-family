@@ -52,7 +52,7 @@ public class CustomerServiceApplication {
 		return requestFactory;
 	}
 
-	@LoadBalanced
+	@LoadBalanced // 这里添加了负载均衡
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 		return builder
