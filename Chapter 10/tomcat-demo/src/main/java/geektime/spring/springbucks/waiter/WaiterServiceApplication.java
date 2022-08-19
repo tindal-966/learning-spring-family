@@ -27,11 +27,15 @@ public class WaiterServiceApplication implements WebMvcConfigurer,
 		SpringApplication.run(WaiterServiceApplication.class, args);
 	}
 
+	/**
+	 * 自定义 Web 容器配置
+	 */
 	@Override
 	public void customize(TomcatServletWebServerFactory factory) {
 		Compression compression = new Compression();
 		compression.setEnabled(true);
 		compression.setMinResponseSize(DataSize.ofBytes(512));
+
 		factory.setCompression(compression);
 	}
 
