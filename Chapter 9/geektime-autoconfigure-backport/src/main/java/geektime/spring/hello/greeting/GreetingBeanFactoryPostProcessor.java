@@ -11,6 +11,7 @@ import org.springframework.util.ClassUtils;
 @Slf4j
 public class GreetingBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+        // 等价于 @ConditionalOnClass(GreetingApplicationRunner.class)
         boolean hasClass = ClassUtils.isPresent("geektime.spring.hello.greeting.GreetingApplicationRunner",
                 GreetingBeanFactoryPostProcessor.class.getClassLoader());
         if (!hasClass) {
@@ -18,10 +19,13 @@ public class GreetingBeanFactoryPostProcessor implements BeanFactoryPostProcesso
             return;
         }
 
+        // 等价于 @ConditionalOnMissingBean(GreetingApplicationRunner.class)
         if (beanFactory.containsBeanDefinition("greetingApplicationRunner")) {
             log.info("We already have a greetingApplicationRunner bean registered.");
             return;
         }
+
+        // 这里没有判断 @ConditionalOnProperty(name = "greeting.enabled", havingValue = "true", matchIfMissing = true) 这个条件
 
         register(beanFactory);
     }
