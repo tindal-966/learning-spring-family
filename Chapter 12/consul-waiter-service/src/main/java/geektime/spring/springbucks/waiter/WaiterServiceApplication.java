@@ -17,7 +17,7 @@ import java.util.TimeZone;
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableCaching
-@EnableDiscoveryClient
+@EnableDiscoveryClient // 启用 Consul Discovery
 public class WaiterServiceApplication implements WebMvcConfigurer {
 
 	public static void main(String[] args) {

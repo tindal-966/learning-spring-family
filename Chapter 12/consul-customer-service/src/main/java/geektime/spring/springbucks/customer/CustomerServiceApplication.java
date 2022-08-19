@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
 @Slf4j
-@EnableDiscoveryClient
+@EnableDiscoveryClient // 启用 Consul Discovery
 public class CustomerServiceApplication {
 
 	public static void main(String[] args) {
