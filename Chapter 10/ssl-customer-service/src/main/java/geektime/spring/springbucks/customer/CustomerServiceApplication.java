@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class CustomerServiceApplication {
 	@Value("${security.key-store}")
-	private Resource keyStore;
+	private Resource keyStore; // 这里使用 Resource 存放证书
 	@Value("${security.key-pass}")
 	private String keyPass;
 
@@ -44,6 +44,9 @@ public class CustomerServiceApplication {
 				.run(args);
 	}
 
+	/**
+	 * 这里是 SSL 的有关配置
+	 */
 	@Bean
 	public HttpComponentsClientHttpRequestFactory requestFactory() {
 		SSLContext sslContext = null;
@@ -64,8 +67,8 @@ public class CustomerServiceApplication {
 				.setMaxConnPerRoute(20)
 				.disableAutomaticRetries()
 				.setKeepAliveStrategy(new CustomConnectionKeepAliveStrategy())
-				.setSSLContext(sslContext)
-				.setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
+				.setSSLContext(sslContext) // 主要是这里
+				.setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE) // 这里
 				.build();
 
 		HttpComponentsClientHttpRequestFactory requestFactory =
