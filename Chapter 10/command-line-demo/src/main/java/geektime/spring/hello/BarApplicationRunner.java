@@ -12,6 +12,6 @@ import org.springframework.stereotype.Component;
 public class BarApplicationRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        log.info("Bar");
+        log.info("Bar. Excepted Order = 2");
     }
 }

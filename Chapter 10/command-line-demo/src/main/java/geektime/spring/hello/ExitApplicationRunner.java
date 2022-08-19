@@ -18,6 +18,8 @@ public class ExitApplicationRunner implements ApplicationRunner, ApplicationCont
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        log.info("Excepted order = 3.");
+
         int code = SpringApplication.exit(applicationContext);
         log.info("Exit with {}.", code);
         System.exit(code);
@@ -25,6 +27,6 @@ public class ExitApplicationRunner implements ApplicationRunner, ApplicationCont
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
+        this.applicationContext = applicationContext; // 因为使用了 ApplicationContextAware 所以可以获取到 ApplicationContext（类似 @Autowired）
     }
 }

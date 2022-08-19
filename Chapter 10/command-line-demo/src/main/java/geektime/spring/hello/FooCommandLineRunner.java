@@ -11,6 +11,6 @@ import org.springframework.stereotype.Component;
 public class FooCommandLineRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
-        log.info("Foo");
+        log.info("Foo. Excepted Order = 1");
     }
 }
