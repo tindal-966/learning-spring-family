@@ -20,27 +20,31 @@ public class SbaServerApplication extends WebSecurityConfigurerAdapter {
 		SpringApplication.run(SbaServerApplication.class, args);
 	}
 
+	/**
+	 * 设置 Security 规则
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		String adminContextPath = adminServerProperties.getContextPath();
 
+		// 设置验证成功跳转首页
 		SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
 		successHandler.setTargetUrlParameter("redirectTo");
 		successHandler.setDefaultTargetUrl(adminContextPath + "/");
 
 		http.authorizeRequests()
+				// 默认放行
 				.antMatchers(adminContextPath + "/assets/**").permitAll()
 				.antMatchers(adminContextPath + "/login").permitAll()
 				.anyRequest().authenticated()
 				.and()
+				// 设置登录页
 				.formLogin().loginPage(adminContextPath + "/login").successHandler(successHandler).and()
+				// 设置登出 URL
 				.logout().logoutUrl(adminContextPath + "/logout").and()
 				.httpBasic().and()
 				.csrf()
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-				.ignoringAntMatchers(
-						adminContextPath + "/instances",
-						adminContextPath + "/actuator/**"
-				);
+				.ignoringAntMatchers(adminContextPath + "/instances", adminContextPath + "/actuator/**");
 	}
 }
