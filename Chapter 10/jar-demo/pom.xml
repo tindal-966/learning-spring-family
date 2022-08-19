@@ -81,7 +81,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<executable>true</executable>
+					<executable>true</executable> <!-- 这里指定了打出来的 Jar 包可以直接 ./xxx.jar 执行而无需 java -jar xxx.jar -->
 				</configuration>
 			</plugin>
 		</plugins>
