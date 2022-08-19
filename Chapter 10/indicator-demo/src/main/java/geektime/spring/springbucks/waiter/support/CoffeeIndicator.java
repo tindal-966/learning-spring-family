@@ -6,6 +6,9 @@ import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
 
+/**
+ * 自定义的 Health Indicator
+ */
 @Component
 public class CoffeeIndicator implements HealthIndicator {
     @Autowired
