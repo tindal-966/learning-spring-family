@@ -13,13 +13,14 @@ import org.springframework.core.io.Resource;
 @Slf4j
 public class YapfEnvironmentPostProcessor implements EnvironmentPostProcessor {
     private PropertiesPropertySourceLoader loader = new PropertiesPropertySourceLoader();
+
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
-        MutablePropertySources propertySources = environment.getPropertySources();
+        MutablePropertySources propertySources = environment.getPropertySources(); // 获取当前 env 的所有 PropertySources
+
         Resource resource = new ClassPathResource("yapf.properties");
         try {
-            PropertySource ps = loader.load("YetAnotherPropertiesFile", resource)
-                    .get(0);
+            PropertySource ps = loader.load("YetAnotherPropertiesFile", resource).get(0);
             propertySources.addFirst(ps);
         } catch (Exception e) {
             log.error("Exception!", e);
