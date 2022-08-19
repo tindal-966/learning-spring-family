@@ -29,7 +29,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot</artifactId>
+			<artifactId>spring-boot</artifactId> <!-- 只引入了 spring-boot -->
 		</dependency>
 
 		<dependency>

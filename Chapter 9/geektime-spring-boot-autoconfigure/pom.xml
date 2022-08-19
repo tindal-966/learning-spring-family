@@ -28,14 +28,14 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-autoconfigure</artifactId>
+			<artifactId>spring-boot-autoconfigure</artifactId> <!-- 这个依赖很重要 -->
 		</dependency>
 
 		<dependency>
 			<groupId>geektime.spring.hello</groupId>
 			<artifactId>greeting</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-			<scope>provided</scope>
+			<scope>provided</scope> <!-- autoConfigure 的条件 Bean。注意这里是 provided，不能在 autoConfigure 中直接引入，否则 @ConditionalOnClass 条件永远为 true -->
 		</dependency>
 	</dependencies>
 
