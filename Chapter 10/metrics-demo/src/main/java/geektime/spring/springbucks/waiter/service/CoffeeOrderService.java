@@ -18,7 +18,7 @@ import java.util.Arrays;
 @Service
 @Transactional
 @Slf4j
-public class CoffeeOrderService implements MeterBinder {
+public class CoffeeOrderService implements MeterBinder { // 这里实现了 MeterBinder 接口
     @Autowired
     private CoffeeOrderRepository orderRepository;
 
@@ -52,7 +52,7 @@ public class CoffeeOrderService implements MeterBinder {
     }
 
     @Override
-    public void bindTo(MeterRegistry meterRegistry) {
+    public void bindTo(MeterRegistry meterRegistry) { // 指定绑定的 Metric
         this.orderCounter = meterRegistry.counter("order.count");
     }
 }
