@@ -37,7 +37,7 @@ public class CustomerController {
     public CustomerController(CircuitBreakerRegistry circuitBreakerRegistry,
                               BulkheadRegistry bulkheadRegistry) {
         circuitBreaker = circuitBreakerRegistry.circuitBreaker("menu");
-        bulkhead = bulkheadRegistry.bulkhead("menu");
+        bulkhead = bulkheadRegistry.bulkhead("menu"); // 使用编程方式使用：需要先注册一个 Bulkhead
     }
 
     @GetMapping("/menu")
@@ -45,7 +45,7 @@ public class CustomerController {
         return Try.ofSupplier(
                 Bulkhead.decorateSupplier(bulkhead,
                         CircuitBreaker.decorateSupplier(circuitBreaker,
-                                () -> coffeeService.getAll())))
+                                () -> coffeeService.getAll()))) // 使用编程方式使用：Bulkhead.decorateSupplier
                 .recover(CircuitBreakerOpenException.class, Collections.emptyList())
                 .recover(BulkheadFullException.class, Collections.emptyList())
                 .get();
@@ -53,7 +53,7 @@ public class CustomerController {
 
     @PostMapping("/order")
     @io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker(name = "order")
-    @io.github.resilience4j.bulkhead.annotation.Bulkhead(name = "order")
+    @io.github.resilience4j.bulkhead.annotation.Bulkhead(name = "order") // 使用声明方式使用 Resilience4j bulkhead
     public CoffeeOrder createOrder() {
         NewOrderRequest orderRequest = NewOrderRequest.builder()
                 .customer("Li Lei")
