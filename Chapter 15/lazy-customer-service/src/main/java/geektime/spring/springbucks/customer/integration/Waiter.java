@@ -7,5 +7,5 @@ public interface Waiter {
     String NOTIFY_ORDERS = "notifyOrders";
 
     @Input(NOTIFY_ORDERS)
-    SubscribableChannel notification();
+    SubscribableChannel notification(); // 订阅 Channel
 }

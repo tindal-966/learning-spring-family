@@ -18,13 +18,13 @@ public class NotificationListener {
     @Value("${customer.name}")
     private String customer;
 
-    @StreamListener(Waiter.NOTIFY_ORDERS)
+    @StreamListener(Waiter.NOTIFY_ORDERS) // 当监听到消息时
     public void takeOrder(@Payload Long id) {
         CoffeeOrder order = orderService.getOrder(id);
         if (OrderState.BREWED == order.getState()) {
             log.info("Order {} is READY, I'll take it.", id);
             orderService.updateState(id,
-                    OrderStateRequest.builder().state(OrderState.TAKEN).build());
+                    OrderStateRequest.builder().state(OrderState.TAKEN).build()); // 更新订单状态，表示拿走 coffee
         } else {
             log.warn("Order {} is NOT READY. Why are you notify me?", id);
         }

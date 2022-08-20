@@ -46,6 +46,8 @@
 			<groupId>io.github.openfeign</groupId>
 			<artifactId>feign-httpclient</artifactId>
 		</dependency>
+
+		<!-- 引入依赖 -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-stream-rabbit</artifactId>

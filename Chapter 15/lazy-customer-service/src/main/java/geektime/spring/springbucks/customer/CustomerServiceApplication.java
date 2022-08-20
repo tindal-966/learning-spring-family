@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableAspectJAutoProxy
-@EnableBinding(Waiter.class)
+@EnableBinding(Waiter.class) // 绑定 Spring Cloud Stream Channel
 public class CustomerServiceApplication {
 
     public static void main(String[] args) {

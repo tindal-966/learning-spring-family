@@ -17,7 +17,7 @@ public class OrderListener {
     @Autowired
     private CoffeeOrderService orderService;
 
-    @StreamListener(Barista.FINISHED_ORDERS)
+    @StreamListener(Barista.FINISHED_ORDERS) // 当监听到订单完成时
     public void listenFinishedOrders(Long id) {
         log.info("We've finished an order [{}].", id);
         CoffeeOrder order = orderService.get(id);
@@ -25,6 +25,6 @@ public class OrderListener {
                 .setHeader("customer", order.getCustomer())
                 .build();
         log.info("Notify the customer: {}", order.getCustomer());
-        customer.notification().send(message);
+        customer.notification().send(message); // 发送消息给顾客
     }
 }
