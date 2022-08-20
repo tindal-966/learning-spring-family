@@ -26,7 +26,7 @@ public class OrderListener {
     private String barista;
 
     @StreamListener(Waiter.NEW_ORDERS)
-    @SendTo(Waiter.FINISHED_ORDERS)
+    @SendTo(Waiter.FINISHED_ORDERS) // 使用声明式发送消息，会把函数返回值发送到 Channel
     public Long processNewOrder(Long id) {
         CoffeeOrder o = orderRepository.getOne(id);
         if (o == null) {
