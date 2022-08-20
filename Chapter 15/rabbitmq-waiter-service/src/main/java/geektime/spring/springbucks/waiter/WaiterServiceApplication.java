@@ -1,7 +1,7 @@
 package geektime.spring.springbucks.waiter;
 
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
-import geektime.spring.springbucks.waiter.controller.PerformanceInteceptor;
+import geektime.spring.springbucks.waiter.controller.PerformanceInterceptor;
 import geektime.spring.springbucks.waiter.integration.Barista;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,7 +20,7 @@ import java.util.TimeZone;
 @EnableJpaRepositories
 @EnableCaching
 @EnableDiscoveryClient
-@EnableBinding(Barista.class)
+@EnableBinding(Barista.class) // 声明绑定的 Channel
 public class WaiterServiceApplication implements WebMvcConfigurer {
 
 	public static void main(String[] args) {
@@ -29,7 +29,7 @@ public class WaiterServiceApplication implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new PerformanceInteceptor())
+		registry.addInterceptor(new PerformanceInterceptor())
 				.addPathPatterns("/coffee/**").addPathPatterns("/order/**");
 	}
 

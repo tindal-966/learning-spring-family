@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EnableJpaRepositories
 @SpringBootApplication
-@EnableBinding(Waiter.class)
+@EnableBinding(Waiter.class) // 声明绑定的 Channel
 public class BaristaServiceApplication {
 
 	public static void main(String[] args) {

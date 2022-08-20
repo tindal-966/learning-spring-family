@@ -12,6 +12,8 @@ import io.micrometer.core.instrument.binder.MeterBinder;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.money.Money;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,8 +34,11 @@ public class CoffeeOrderService implements MeterBinder {
     private CoffeeOrderRepository orderRepository;
     @Autowired
     private OrderProperties orderProperties;
+
     @Autowired
-    private Barista barista;
+    private Barista barista; // 注入 Channel ，用来发送消息（注入 MessageChannel 也可以，如下）
+//    @Autowired @Qualifier(Barista.NEW_ORDERS)
+//    private MessageChannel baristaMessageChannel;
 
     private String waiterId = UUID.randomUUID().toString();
 
@@ -73,7 +78,7 @@ public class CoffeeOrderService implements MeterBinder {
         if (state == OrderState.PAID) {
             // 有返回值，如果要关注发送结果，则判断返回值
             // 一般消息体不会这么简单
-            barista.newOrders().send(MessageBuilder.withPayload(order.getId()).build());
+            barista.newOrders().send(MessageBuilder.withPayload(order.getId()).build()); // 发送消息
         }
         return true;
     }

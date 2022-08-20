@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
-public class PerformanceInteceptor implements HandlerInterceptor {
+public class PerformanceInterceptor implements HandlerInterceptor {
     private ThreadLocal<StopWatch> stopWatch = new ThreadLocal<>();
 
     @Override

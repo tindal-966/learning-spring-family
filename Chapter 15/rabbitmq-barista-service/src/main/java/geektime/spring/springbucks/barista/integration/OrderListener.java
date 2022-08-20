@@ -19,13 +19,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderListener {
     @Autowired
     private CoffeeOrderRepository orderRepository;
+
     @Autowired
     @Qualifier(Waiter.FINISHED_ORDERS)
-    private MessageChannel finishedOrdersMessageChannel;
+    private MessageChannel finishedOrdersMessageChannel; // 注入 Channel Bean，用以发送消息
+
     @Value("${order.barista-prefix}${random.uuid}")
     private String barista;
 
-    @StreamListener(Waiter.NEW_ORDERS)
+    @StreamListener(Waiter.NEW_ORDERS) // 监听 Channel
     public void processNewOrder(Long id) {
         CoffeeOrder o = orderRepository.getOne(id);
         if (o == null) {
