@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 
 @SpringBootApplication
-@EnableHystrixDashboard
+@EnableHystrixDashboard // 启用 Dashboard
 public class HystrixDashboardDemoApplication {
 
 	public static void main(String[] args) {
