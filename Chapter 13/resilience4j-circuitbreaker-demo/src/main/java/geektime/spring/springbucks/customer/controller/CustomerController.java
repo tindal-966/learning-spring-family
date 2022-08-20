@@ -31,7 +31,7 @@ public class CustomerController {
     private CircuitBreaker circuitBreaker;
 
     public CustomerController(CircuitBreakerRegistry registry) {
-        circuitBreaker = registry.circuitBreaker("menu");
+        circuitBreaker = registry.circuitBreaker("menu"); // 使用编程方式使用：需要先注册一个 CircuitBreaker
     }
 
     @GetMapping("/menu")
@@ -40,11 +40,11 @@ public class CustomerController {
                 CircuitBreaker.decorateSupplier(circuitBreaker,
                         () -> coffeeService.getAll()))
                 .recover(CircuitBreakerOpenException.class, Collections.emptyList())
-                .get();
+                .get(); // 使用编程方式使用：指定 fallback
     }
 
     @PostMapping("/order")
-    @io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker(name = "order")
+    @io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker(name = "order") // 使用声明方式使用 Resilience4j（不指定 fallback）
     public CoffeeOrder createOrder() {
         NewOrderRequest orderRequest = NewOrderRequest.builder()
                 .customer("Li Lei")

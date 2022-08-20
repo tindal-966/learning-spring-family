@@ -20,6 +20,7 @@
 	</properties>
 
 	<dependencies>
+		<!-- 引入 resilience4j 依赖 -->
 		<dependency>
 			<groupId>io.github.resilience4j</groupId>
 			<artifactId>resilience4j-spring-boot2</artifactId>
