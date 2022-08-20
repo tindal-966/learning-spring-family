@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @EnableDiscoveryClient
 @EnableFeignClients
-@EnableCircuitBreaker
+@EnableCircuitBreaker // 启用 Hystrix
 public class CustomerServiceApplication {
 
 	public static void main(String[] args) {

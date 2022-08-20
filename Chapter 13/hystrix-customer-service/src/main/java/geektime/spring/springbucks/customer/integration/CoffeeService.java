@@ -10,7 +10,7 @@ import java.util.List;
 
 @FeignClient(name = "waiter-service", contextId = "coffee",
         qualifier = "coffeeService", path="/coffee",
-        fallback = FallbackCoffeeService.class)
+        fallback = FallbackCoffeeService.class) // 指定了 fallback 类（Class-level）
 // 如果用了Fallback，不要在接口上加@RequestMapping，path可以用在这里
 public interface CoffeeService {
     @GetMapping(path = "/", params = "!name")

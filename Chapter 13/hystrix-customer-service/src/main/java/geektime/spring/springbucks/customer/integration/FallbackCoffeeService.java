@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 断路 Fallback 处理
+ */
 @Slf4j
 @Component
 public class FallbackCoffeeService implements CoffeeService {

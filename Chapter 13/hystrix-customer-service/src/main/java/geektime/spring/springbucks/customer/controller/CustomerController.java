@@ -33,7 +33,7 @@ public class CustomerController {
     }
 
     @PostMapping("/order")
-    @HystrixCommand(fallbackMethod = "fallbackCreateOrder")
+    @HystrixCommand(fallbackMethod = "fallbackCreateOrder") // 指定 fallback 方法（method-level）
     public CoffeeOrder createOrder() {
         NewOrderRequest orderRequest = NewOrderRequest.builder()
                 .customer("Li Lei")
@@ -44,7 +44,7 @@ public class CustomerController {
         return order;
     }
 
-    public CoffeeOrder fallbackCreateOrder() {
+    public CoffeeOrder fallbackCreateOrder() { // 返回必须和原方法一致
         log.warn("Fallback to NULL order.");
         return null;
     }
