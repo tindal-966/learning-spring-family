@@ -51,6 +51,7 @@
 			<artifactId>spring-cloud-starter-stream-rabbit</artifactId>
 		</dependency>
 
+		<!-- 引入依赖，这里包括 spring-cloud-starter-sleuth 和 spring-cloud-sleuth-zipkin-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-zipkin</artifactId>
