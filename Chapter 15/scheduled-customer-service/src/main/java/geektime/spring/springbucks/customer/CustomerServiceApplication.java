@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableAspectJAutoProxy
-@EnableScheduling
+@EnableScheduling // 启用 Scheduling
 public class CustomerServiceApplication {
 
 	public static void main(String[] args) {

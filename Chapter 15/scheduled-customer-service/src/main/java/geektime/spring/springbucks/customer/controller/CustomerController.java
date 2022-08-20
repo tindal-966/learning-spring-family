@@ -31,14 +31,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/customer")
 @Slf4j
-public class CustomerController implements ApplicationEventPublisherAware {
+public class CustomerController implements ApplicationEventPublisherAware { // 这里实现了 ApplicationEventPublisherAware
     @Autowired
     private CoffeeService coffeeService;
     @Autowired
     private CoffeeOrderService coffeeOrderService;
     private CircuitBreaker circuitBreaker;
     private Bulkhead bulkhead;
-    private ApplicationEventPublisher applicationEventPublisher;
+
+    private ApplicationEventPublisher applicationEventPublisher; // 获取事件发送器（因为上面设置了 Aware 所以可以成功获取）
 
     public CustomerController(CircuitBreakerRegistry circuitBreakerRegistry,
                               BulkheadRegistry bulkheadRegistry) {
@@ -70,7 +71,7 @@ public class CustomerController implements ApplicationEventPublisherAware {
         order = coffeeOrderService.updateState(order.getId(),
                 OrderStateRequest.builder().state(OrderState.PAID).build());
         log.info("Order is PAID: {}", order);
-        applicationEventPublisher.publishEvent(new OrderWaitingEvent(order));
+        applicationEventPublisher.publishEvent(new OrderWaitingEvent(order)); // 发送事件
         return order;
     }
 

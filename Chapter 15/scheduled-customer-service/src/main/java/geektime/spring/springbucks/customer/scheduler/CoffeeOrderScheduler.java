@@ -19,20 +19,27 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CoffeeOrderScheduler {
     @Autowired
     private CoffeeOrderService coffeeOrderService;
+
     private Map<Long, CoffeeOrder> orderMap = new ConcurrentHashMap<>();
 
+    /**
+     * 事件监听
+     */
     @EventListener
     public void acceptOrder(OrderWaitingEvent event) {
-        orderMap.put(event.getOrder().getId(), event.getOrder());
+        orderMap.put(event.getOrder().getId(), event.getOrder()); // 事件发生时 put 到 orderMap
     }
 
-    @Scheduled(fixedRate = 1000)
+    /**
+     * 设置定时处理
+     */
+    @Scheduled(fixedRate = 1000) // 1 秒处理一次
     public void waitForCoffee() {
         if (orderMap.isEmpty()) {
             return;
         }
         log.info("I'm waiting for my coffee.");
-        orderMap.values().stream()
+        orderMap.values().stream() // 定时到时处理 orderMap 的内容
                 .map(o -> coffeeOrderService.getOrder(o.getId()))
                 .filter(o -> OrderState.BREWED == o.getState())
                 .forEach(o -> {
