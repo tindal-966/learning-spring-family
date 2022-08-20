@@ -31,17 +31,17 @@ public class CoffeeOrderController {
     private RateLimiter rateLimiter;
 
     public CoffeeOrderController(RateLimiterRegistry rateLimiterRegistry) {
-        rateLimiter = rateLimiterRegistry.rateLimiter("order");
+        rateLimiter = rateLimiterRegistry.rateLimiter("order"); // 编程方式：注册一个 RateLimiter
     }
 
     @GetMapping("/{id}")
     public CoffeeOrder getOrder(@PathVariable("id") Long id) {
         CoffeeOrder order = null;
         try {
-            order = rateLimiter.executeSupplier(() -> orderService.get(id));
+            order = rateLimiter.executeSupplier(() -> orderService.get(id)); // 编程方式：使用 RateLimiter
             log.info("Get Order: {}", order);
         } catch(RequestNotPermitted e) {
-            log.warn("Request Not Permitted! {}", e.getMessage());
+            log.warn("Request Not Permitted! {}", e.getMessage()); // 编程方式：可以提供一个被限流之后的处理
         }
         return order;
     }
@@ -49,7 +49,7 @@ public class CoffeeOrderController {
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    @io.github.resilience4j.ratelimiter.annotation.RateLimiter(name = "order")
+    @io.github.resilience4j.ratelimiter.annotation.RateLimiter(name = "order") // 声明方式（返回内容为 500 + 限流提示）
     public CoffeeOrder create(@RequestBody NewOrderRequest newOrder) {
         log.info("Receive new Order {}", newOrder);
         Coffee[] coffeeList = coffeeService.getCoffeeByName(newOrder.getItems())

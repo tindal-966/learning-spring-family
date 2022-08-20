@@ -32,7 +32,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/coffee")
-@RateLimiter(name = "coffee")
+@RateLimiter(name = "coffee") // 声明方式（返回内容为 500 + 限流提示）
 @Slf4j
 public class CoffeeController {
     @Autowired
