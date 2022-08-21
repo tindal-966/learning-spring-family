@@ -27,7 +27,7 @@ public class MybatisDemoApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		coffeeMapper.findAllWithRowBounds(new RowBounds(1, 3))
+		coffeeMapper.findAllWithRowBounds(new RowBounds(1, 3)) // 每页 3 条，第一页
 				.forEach(c -> log.info("Page(1) Coffee {}", c));
 		coffeeMapper.findAllWithRowBounds(new RowBounds(2, 3))
 				.forEach(c -> log.info("Page(2) Coffee {}", c));
@@ -39,7 +39,7 @@ public class MybatisDemoApplication implements ApplicationRunner {
 
 		log.info("===================");
 
-		coffeeMapper.findAllWithParam(1, 3)
+		coffeeMapper.findAllWithParam(1, 3) // 每页 3 条，第一页
 				.forEach(c -> log.info("Page(1) Coffee {}", c));
 		List<Coffee> list = coffeeMapper.findAllWithParam(2, 3);
 		PageInfo page = new PageInfo(list);

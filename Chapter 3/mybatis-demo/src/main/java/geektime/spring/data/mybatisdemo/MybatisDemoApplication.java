@@ -14,14 +14,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @Slf4j
-@MapperScan("geektime.spring.data.mybatisdemo.mapper")
+@MapperScan("geektime.spring.data.mybatisdemo.mapper") // 扫描 Mapper 类
 public class MybatisDemoApplication implements ApplicationRunner {
-	@Autowired
-	private CoffeeMapper coffeeMapper;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MybatisDemoApplication.class, args);
 	}
+
+	@Autowired
+	private CoffeeMapper coffeeMapper;
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {

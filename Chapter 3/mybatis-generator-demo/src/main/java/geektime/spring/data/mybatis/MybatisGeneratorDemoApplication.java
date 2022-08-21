@@ -25,12 +25,13 @@ import java.util.List;
 @Slf4j
 @MapperScan("geektime.spring.data.mybatis.mapper")
 public class MybatisGeneratorDemoApplication implements ApplicationRunner {
-	@Autowired
-	private CoffeeMapper coffeeMapper;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MybatisGeneratorDemoApplication.class, args);
 	}
+
+	@Autowired
+	private CoffeeMapper coffeeMapper;
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
