@@ -31,7 +31,7 @@ public class CoffeeOrderService {
     }
 
     public boolean updateState(CoffeeOrder order, OrderState state) {
-        if (state.compareTo(order.getState()) <= 0) {
+        if (state.compareTo(order.getState()) <= 0) { // 状态变化只允许往大了走
             log.warn("Wrong State order: {}, {}", state, order.getState());
             return false;
         }

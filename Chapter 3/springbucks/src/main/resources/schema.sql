@@ -1,7 +1,9 @@
+-- drop 表
 drop table t_coffee if exists;
 drop table t_order if exists;
 drop table t_order_coffee if exists;
 
+-- create 表
 create table t_coffee (
     id bigint auto_increment,
     create_time timestamp,
@@ -25,6 +27,7 @@ create table t_order_coffee (
     items_id bigint not null
 );
 
+-- 初始化数据
 insert into t_coffee (name, price, create_time, update_time) values ('espresso', 2000, now(), now());
 insert into t_coffee (name, price, create_time, update_time) values ('latte', 2500, now(), now());
 insert into t_coffee (name, price, create_time, update_time) values ('capuccino', 2500, now(), now());

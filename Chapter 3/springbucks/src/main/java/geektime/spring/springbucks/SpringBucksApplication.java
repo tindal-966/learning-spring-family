@@ -22,16 +22,17 @@ import java.util.Optional;
 @SpringBootApplication
 @EnableJpaRepositories
 public class SpringBucksApplication implements ApplicationRunner {
+
+	public static void main(String[] args) {
+		SpringApplication.run(SpringBucksApplication.class, args);
+	}
+
 	@Autowired
 	private CoffeeRepository coffeeRepository;
 	@Autowired
 	private CoffeeService coffeeService;
 	@Autowired
 	private CoffeeOrderService orderService;
-
-	public static void main(String[] args) {
-		SpringApplication.run(SpringBucksApplication.class, args);
-	}
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {

@@ -15,9 +15,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @MappedSuperclass
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Data @NoArgsConstructor @AllArgsConstructor
 public class BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

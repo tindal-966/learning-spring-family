@@ -22,7 +22,8 @@ public class CoffeeService {
         ExampleMatcher matcher = ExampleMatcher.matching()
                 .withMatcher("name", exact().ignoreCase());
         Optional<Coffee> coffee = coffeeRepository.findOne(
-                Example.of(Coffee.builder().name(name).build(), matcher));
+                Example.of(Coffee.builder().name(name).build(), matcher)); // 注意这里的 ExampleMatcher 和 Example 类
+
         log.info("Coffee Found: {}", coffee);
         return coffee;
     }
