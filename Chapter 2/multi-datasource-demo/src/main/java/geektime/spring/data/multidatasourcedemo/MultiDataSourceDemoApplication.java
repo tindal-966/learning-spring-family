@@ -17,46 +17,43 @@ import javax.sql.DataSource;
 
 @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class,
         DataSourceTransactionManagerAutoConfiguration.class,
-        JdbcTemplateAutoConfiguration.class})
+        JdbcTemplateAutoConfiguration.class}) // 取消 spring-boot-starter-jdbc 有关的自动配置，全部手动
 @Slf4j
 public class MultiDataSourceDemoApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(MultiDataSourceDemoApplication.class, args);
     }
 
+    // 数据源 foo 有关配置
     @Bean
     @ConfigurationProperties("foo.datasource")
     public DataSourceProperties fooDataSourceProperties() {
         return new DataSourceProperties();
     }
-
     @Bean
     public DataSource fooDataSource() {
         DataSourceProperties dataSourceProperties = fooDataSourceProperties();
         log.info("foo datasource: {}", dataSourceProperties.getUrl());
         return dataSourceProperties.initializeDataSourceBuilder().build();
     }
-
     @Bean
     @Resource
     public PlatformTransactionManager fooTxManager(DataSource fooDataSource) {
         return new DataSourceTransactionManager(fooDataSource);
     }
 
+    // 数据源 bar 有关配置
     @Bean
     @ConfigurationProperties("bar.datasource")
     public DataSourceProperties barDataSourceProperties() {
         return new DataSourceProperties();
     }
-
     @Bean
     public DataSource barDataSource() {
         DataSourceProperties dataSourceProperties = barDataSourceProperties();
         log.info("bar datasource: {}", dataSourceProperties.getUrl());
         return dataSourceProperties.initializeDataSourceBuilder().build();
     }
-
     @Bean
     @Resource
     public PlatformTransactionManager barTxManager(DataSource barDataSource) {
