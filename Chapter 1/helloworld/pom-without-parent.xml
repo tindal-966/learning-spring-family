@@ -13,7 +13,7 @@
 		<java.version>1.8</java.version>
 	</properties>
 
-	<!-- 注意这里使用的是 spring-boot-dependencies -->
+	<!-- 注意这里的 依赖管理 使用的是 spring-boot-dependencies -->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -31,7 +31,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
