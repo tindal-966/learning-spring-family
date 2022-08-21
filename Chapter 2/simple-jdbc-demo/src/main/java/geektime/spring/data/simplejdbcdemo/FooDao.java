@@ -19,7 +19,7 @@ public class FooDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
-    private SimpleJdbcInsert simpleJdbcInsert;
+    private SimpleJdbcInsert simpleJdbcInsert; // 注意一下，需要创建该 Bean，查看 SimpleJdbcDemoApplication
 
     public void insertData() {
         Arrays.asList("b", "c").forEach(bar -> {

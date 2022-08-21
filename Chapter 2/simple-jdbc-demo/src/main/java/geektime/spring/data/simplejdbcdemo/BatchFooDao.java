@@ -12,12 +12,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 批处理操作
+ */
 @Repository
 public class BatchFooDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Autowired
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate; // 注意一下，需要创建该 Bean，查看 SimpleJdbcDemoApplication
 
     public void batchInsert() {
         jdbcTemplate.batchUpdate("INSERT INTO FOO (BAR) VALUES (?)",
