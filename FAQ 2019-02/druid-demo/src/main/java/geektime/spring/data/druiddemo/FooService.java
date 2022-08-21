@@ -12,10 +12,10 @@ public class FooService {
 
     @Transactional
     public void selectForUpdate() {
-        jdbcTemplate.queryForObject("select id from foo where id = 1 for update", Long.class);
+        jdbcTemplate.queryForObject("select id from foo where id = 1 for update", Long.class); // for update 会使用行锁
+
         try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-        }
+            Thread.sleep(200); // 锁 200 毫秒
+        } catch (InterruptedException e) { }
     }
 }

@@ -13,19 +13,20 @@ import javax.sql.DataSource;
 @Slf4j
 @EnableTransactionManagement(proxyTargetClass = true)
 public class DruidDemoApplication implements CommandLineRunner {
-	@Autowired
-	private DataSource dataSource;
-	@Autowired
-	private FooService fooService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DruidDemoApplication.class, args);
 	}
 
+	@Autowired
+	private DataSource dataSource;
+	@Autowired
+	private FooService fooService;
 	@Override
 	public void run(String... args) throws Exception {
 		log.info(dataSource.toString());
-		new Thread(() -> fooService.selectForUpdate()).start();
+
+		new Thread(() -> fooService.selectForUpdate()).start(); // selectForUpdate 方法行锁 + 休眠
 		new Thread(() -> fooService.selectForUpdate()).start();
 	}
 }
