@@ -20,23 +20,25 @@ import java.util.List;
 
 @Entity
 @Table(name = "T_ORDER")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class CoffeeOrder implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
+
     private String customer;
+
     @ManyToMany
     @JoinTable(name = "T_ORDER_COFFEE")
     private List<Coffee> items;
-    @Column(nullable = false)
+
+    @Column(nullable = false) // 不允许为空
     private Integer state;
-    @Column(updatable = false)
+
+    @Column(updatable = false) // update 时不可修改
     @CreationTimestamp
     private Date createTime;
+
     @UpdateTimestamp
     private Date updateTime;
 }

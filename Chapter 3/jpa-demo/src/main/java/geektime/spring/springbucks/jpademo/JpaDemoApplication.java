@@ -18,17 +18,18 @@ import java.util.Arrays;
 import java.util.Collections;
 
 @SpringBootApplication
-@EnableJpaRepositories
+@EnableJpaRepositories // 开启 JPA
 @Slf4j
 public class JpaDemoApplication implements ApplicationRunner {
-	@Autowired
-	private CoffeeRepository coffeeRepository;
-	@Autowired
-	private CoffeeOrderRepository orderRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(JpaDemoApplication.class, args);
 	}
+
+	@Autowired
+	private CoffeeRepository coffeeRepository;
+	@Autowired
+	private CoffeeOrderRepository orderRepository;
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {

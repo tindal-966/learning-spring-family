@@ -28,14 +28,15 @@ import java.util.stream.Collectors;
 @EnableTransactionManagement
 @Slf4j
 public class JpaDemoApplication implements ApplicationRunner {
-	@Autowired
-	private CoffeeRepository coffeeRepository;
-	@Autowired
-	private CoffeeOrderRepository orderRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(JpaDemoApplication.class, args);
 	}
+
+	@Autowired
+	private CoffeeRepository coffeeRepository;
+	@Autowired
+	private CoffeeOrderRepository orderRepository;
 
 	@Override
 	@Transactional

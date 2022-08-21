@@ -5,7 +5,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 
-@NoRepositoryBean
+@NoRepositoryBean // 注意这个注解
 public interface BaseRepository<T, Long> extends PagingAndSortingRepository<T, Long> {
     List<T> findTop3ByOrderByUpdateTimeDescIdAsc();
 }
