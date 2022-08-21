@@ -19,7 +19,7 @@
         <property name="cannotAcquireLockCodes">
             <value>50200</value>
         </property>
-        <property name="customTranslations">
+        <property name="customTranslations"> <!-- 自定义 JDBC 异常转换 -->
             <bean class="org.springframework.jdbc.support.CustomSQLErrorCodesTranslation">
                 <property name="errorCodes" value="23001,23505" />
                 <property name="exceptionClass"
