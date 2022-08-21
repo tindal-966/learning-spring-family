@@ -16,42 +16,46 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Properties;
 
-@Configuration
-@EnableTransactionManagement
+@Configuration // 这里是个 Configuration
+@EnableTransactionManagement // 开启事务管理
 public class DataSourceDemo {
-    @Autowired
-    private DataSource dataSource;
-
     public static void main(String[] args) throws SQLException {
         ApplicationContext applicationContext =
-                new ClassPathXmlApplicationContext("applicationContext*.xml");
+                new ClassPathXmlApplicationContext("applicationContext.xml"); // 创建 ApplicationContext
+
         showBeans(applicationContext);
         dataSourceDemo(applicationContext);
     }
 
+    @Autowired
+    private DataSource dataSource;
+
+    /**
+     * 创建数据源 Bean
+     */
     @Bean(destroyMethod = "close")
     public DataSource dataSource() throws Exception {
         Properties properties = new Properties();
         properties.setProperty("driverClassName", "org.h2.Driver");
         properties.setProperty("url", "jdbc:h2:mem:testdb");
         properties.setProperty("username", "sa");
-        return BasicDataSourceFactory.createDataSource(properties);
+        return BasicDataSourceFactory.createDataSource(properties); // 这里使用 BasicDataSourceFactory
     }
-
+    /**
+     * 创建事务管理器 Bean
+     */
     @Bean
     public PlatformTransactionManager transactionManager() throws Exception {
-        return new DataSourceTransactionManager(dataSource());
+        return new DataSourceTransactionManager(dataSource()); // 使用创建的 DateSource Bean
     }
 
     private static void showBeans(ApplicationContext applicationContext) {
         System.out.println(Arrays.toString(applicationContext.getBeanDefinitionNames()));
     }
-
     private static void dataSourceDemo(ApplicationContext applicationContext) throws SQLException {
         DataSourceDemo demo = applicationContext.getBean("dataSourceDemo", DataSourceDemo.class);
         demo.showDataSource();
     }
-
     public void showDataSource() throws SQLException {
         System.out.println(dataSource.toString());
         Connection conn = dataSource.getConnection();

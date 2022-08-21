@@ -13,16 +13,15 @@ import java.sql.SQLException;
 
 @SpringBootApplication
 @Slf4j
-public class DataSourceDemoApplication implements CommandLineRunner {
-	@Autowired
-	private DataSource dataSource;
-
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
-
+public class DataSourceDemoApplication implements CommandLineRunner { // 注意这里的 CommandLineRunner 接口，程序启动之后执行 run 方法
 	public static void main(String[] args) {
 		SpringApplication.run(DataSourceDemoApplication.class, args);
 	}
+
+	@Autowired
+	private DataSource dataSource;
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -36,7 +35,6 @@ public class DataSourceDemoApplication implements CommandLineRunner {
 		log.info(conn.toString());
 		conn.close();
 	}
-
 	private void showData() {
 		jdbcTemplate.queryForList("SELECT * FROM FOO")
 				.forEach(row -> log.info(row.toString()));

@@ -4,6 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- 没有 spring-boot-starter-parent 依赖的 parent -->
     <groupId>geektime.spring.data</groupId>
     <artifactId>pure-spring-datasource-demo</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -15,25 +16,50 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
+            <artifactId>spring-context</artifactId> <!-- IoC 使用 -->
             <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
+            <artifactId>spring-jdbc</artifactId> <!-- 数据源 -->
             <version>${spring.version}</version>
         </dependency>
 
+        <!-- 数据源有关 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>commons-dbcp2</artifactId>
+            <artifactId>commons-dbcp2</artifactId>  <!-- 连接池，会自动配置 -->
             <version>RELEASE</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>RELEASE</version>
-            <scope>runtime</scope>
+            <scope>runtime</scope> <!-- 注意这里的 runtime，生产不会使用内嵌数据库 -->
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <!-- 参考：https://stackoverflow.com/questions/574594/how-can-i-create-an-executable-jar-with-dependencies-using-maven#23986765 -->
+            <plugin>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>geektime.spring.data.datasourcedemo.DataSourceDemo</mainClass> <!-- 指明 main 入口 -->
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

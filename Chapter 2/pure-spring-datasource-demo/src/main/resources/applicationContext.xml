@@ -8,6 +8,8 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="geektime.spring.data" />
+
+    <!-- 在创建 Bean 的时候配置或者在这里中配置 -->
     <!--
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
