@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController // 等同于 @Controller + @ResponseBody
 @RequestMapping("/order")
 @Slf4j
 public class CoffeeOrderController {
