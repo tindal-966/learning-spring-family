@@ -23,14 +23,17 @@ public class CoffeeService {
     @Autowired
     private CoffeeRepository coffeeRepository;
     @Autowired
-    private RedisTemplate<String, Coffee> redisTemplate;
+    private RedisTemplate<String, Coffee> redisTemplate; // 注入 RedisTemplate
 
     public List<Coffee> findAllCoffee() {
         return coffeeRepository.findAll();
     }
 
+    /**
+     * RedisTemplate 使用
+     */
     public Optional<Coffee> findOneCoffee(String name) {
-        HashOperations<String, String, Coffee> hashOperations = redisTemplate.opsForHash();
+        HashOperations<String, String, Coffee> hashOperations = redisTemplate.opsForHash(); // 更多操作参考：https://juejin.cn/post/6988488850712887309
         if (redisTemplate.hasKey(CACHE) && hashOperations.hasKey(CACHE, name)) {
             log.info("Get coffee {} from Redis.", name);
             return Optional.of(hashOperations.get(CACHE, name));
@@ -39,11 +42,12 @@ public class CoffeeService {
                 .withMatcher("name", exact().ignoreCase());
         Optional<Coffee> coffee = coffeeRepository.findOne(
                 Example.of(Coffee.builder().name(name).build(), matcher));
+
         log.info("Coffee Found: {}", coffee);
         if (coffee.isPresent()) {
             log.info("Put coffee {} to Redis.", name);
             hashOperations.put(CACHE, name, coffee.get());
-            redisTemplate.expire(CACHE, 1, TimeUnit.MINUTES);
+            redisTemplate.expire(CACHE, 1, TimeUnit.MINUTES); // 设置缓存过期时间，一定要！！！！！
         }
         return coffee;
     }

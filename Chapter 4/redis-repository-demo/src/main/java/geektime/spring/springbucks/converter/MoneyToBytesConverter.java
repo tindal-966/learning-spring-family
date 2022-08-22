@@ -6,6 +6,9 @@ import org.springframework.data.convert.WritingConverter;
 
 import java.nio.charset.StandardCharsets;
 
+/**
+ * 写转换器
+ */
 @WritingConverter
 public class MoneyToBytesConverter implements Converter<Money, byte[]> {
     @Override

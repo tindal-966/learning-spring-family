@@ -24,20 +24,26 @@ import java.util.Optional;
 @SpringBootApplication
 @EnableJpaRepositories
 public class SpringBucksApplication implements ApplicationRunner {
-	@Autowired
-	private CoffeeService coffeeService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBucksApplication.class, args);
 	}
 
+	@Autowired
+	private CoffeeService coffeeService;
+
+	/**
+	 * 创建 RedisTemplate Bean（因为想对应 Coffee 类）
+	 */
 	@Bean
 	public RedisTemplate<String, Coffee> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
 		RedisTemplate<String, Coffee> template = new RedisTemplate<>();
 		template.setConnectionFactory(redisConnectionFactory);
 		return template;
 	}
-
+	/**
+	 * Redis Cache 底层 Lettuce 配置：优先读取主节点
+	 */
 	@Bean
 	public LettuceClientConfigurationBuilderCustomizer customizer() {
 		return builder -> builder.readFrom(ReadFrom.MASTER_PREFERRED);

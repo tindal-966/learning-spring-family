@@ -25,20 +25,24 @@ import java.util.Optional;
 @EnableTransactionManagement
 @SpringBootApplication
 @EnableJpaRepositories
-@EnableRedisRepositories
+@EnableRedisRepositories // 启用 RedisRepositories
 public class SpringBucksApplication implements ApplicationRunner {
-	@Autowired
-	private CoffeeService coffeeService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBucksApplication.class, args);
 	}
+
+	@Autowired
+	private CoffeeService coffeeService;
 
 	@Bean
 	public LettuceClientConfigurationBuilderCustomizer customizer() {
 		return builder -> builder.readFrom(ReadFrom.MASTER_PREFERRED);
 	}
 
+	/**
+	 * 定义 RedisRepository 与 Joda-Money 转换器
+	 */
 	@Bean
 	public RedisCustomConversions redisCustomConversions() {
 		return new RedisCustomConversions(

@@ -7,6 +7,9 @@ import org.springframework.data.convert.ReadingConverter;
 
 import java.nio.charset.StandardCharsets;
 
+/**
+ * 读转换器
+ */
 @ReadingConverter
 public class BytesToMoneyConverter implements Converter<byte[], Money> {
     @Override

@@ -21,7 +21,7 @@ public class CoffeeService {
     @Autowired
     private CoffeeRepository coffeeRepository;
     @Autowired
-    private CoffeeCacheRepository cacheRepository;
+    private CoffeeCacheRepository cacheRepository; // 使用 Redis 持久化的 Repo
 
     public List<Coffee> findAllCoffee() {
         return coffeeRepository.findAll();
