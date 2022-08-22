@@ -27,15 +27,19 @@ import java.util.concurrent.CountDownLatch;
 
 @SpringBootApplication
 @Slf4j
-public class SimpleR2dbcDemoApplication extends AbstractR2dbcConfiguration
+public class SimpleR2dbcDemoApplication extends AbstractR2dbcConfiguration // 因为 milestone 的原因，对 R2DBC 的自动配置支持还不完全
 		implements ApplicationRunner {
-	@Autowired
-	private DatabaseClient client;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SimpleR2dbcDemoApplication.class, args);
 	}
 
+	@Autowired
+	private DatabaseClient client;
+
+	/**
+	 * 初始化 ConnectionFactory Bean
+	 */
 	@Bean
 	public ConnectionFactory connectionFactory() {
 		return new H2ConnectionFactory(
@@ -45,6 +49,9 @@ public class SimpleR2dbcDemoApplication extends AbstractR2dbcConfiguration
 						.build());
 	}
 
+	/**
+	 * 初始化 Converter Bean
+	 */
 	@Bean
 	public R2dbcCustomConversions r2dbcCustomConversions() {
 		Dialect dialect = getDialect(connectionFactory());
@@ -64,7 +71,7 @@ public class SimpleR2dbcDemoApplication extends AbstractR2dbcConfiguration
 				.fetch()
 				.first()
 				.doFinally(s -> cdl.countDown())
-//				.subscribeOn(Schedulers.elastic())
+//				.subscribeOn(Schedulers.elastic()) // 如果解开注释，则和下面的 select 并发执行
 				.subscribe(c -> log.info("Fetch execute() {}", c));
 
 		client.select()

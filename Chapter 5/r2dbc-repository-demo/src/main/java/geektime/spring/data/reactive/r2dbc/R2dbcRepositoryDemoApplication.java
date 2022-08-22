@@ -25,15 +25,16 @@ import java.util.concurrent.CountDownLatch;
 
 @SpringBootApplication
 @Slf4j
-@EnableR2dbcRepositories
+@EnableR2dbcRepositories // 开启 R2dbcRepositories
 public class R2dbcRepositoryDemoApplication extends AbstractR2dbcConfiguration
 		implements ApplicationRunner {
-	@Autowired
-	private CoffeeRepository repository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(R2dbcRepositoryDemoApplication.class, args);
 	}
+
+	@Autowired
+	private CoffeeRepository repository;
 
 	@Bean
 	public ConnectionFactory connectionFactory() {
