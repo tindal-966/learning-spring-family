@@ -31,7 +31,7 @@ public class CoffeeOrderController {
         return orderService.get(id);
     }
 
-    @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE, // 指定 Request 的 MediaType
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public CoffeeOrder create(@RequestBody NewOrderRequest newOrder) {

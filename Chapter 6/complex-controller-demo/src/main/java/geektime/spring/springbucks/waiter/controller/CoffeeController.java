@@ -20,14 +20,14 @@ public class CoffeeController {
     @Autowired
     private CoffeeService coffeeService;
 
-    @GetMapping(path = "/", params = "!name")
+    @GetMapping(path = "/", params = "!name") // 指定不准带 ?name 参数，因为后面 getByName 方法有特殊处理
     @ResponseBody
     public List<Coffee> getAll() {
         return coffeeService.getAllCoffee();
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE) // 指定 Response 的 MediaType
     @ResponseBody
     public Coffee getById(@PathVariable Long id) {
         Coffee coffee = coffeeService.getCoffee(id);
