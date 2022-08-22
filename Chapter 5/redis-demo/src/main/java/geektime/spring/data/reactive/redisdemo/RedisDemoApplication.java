@@ -22,17 +22,23 @@ import java.util.concurrent.CountDownLatch;
 @SpringBootApplication
 @Slf4j
 public class RedisDemoApplication implements ApplicationRunner {
-    private static final String KEY = "COFFEE_MENU";
-
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-    @Autowired
-    private ReactiveStringRedisTemplate redisTemplate;
 
     public static void main(String[] args) {
         SpringApplication.run(RedisDemoApplication.class, args);
     }
 
+    private static final String KEY = "COFFEE_MENU";
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private ReactiveStringRedisTemplate redisTemplate; // 引入 ReactiveStringRedisTemplate
+
+    /**
+     * 初始化 Bean
+     *
+     * 为什么需要初始化？因为需要 String 类型的 ReactiveRedisTemplate
+     */
     @Bean
     ReactiveStringRedisTemplate reactiveRedisTemplate(ReactiveRedisConnectionFactory factory) {
         return new ReactiveStringRedisTemplate(factory);
@@ -40,9 +46,6 @@ public class RedisDemoApplication implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        ReactiveHashOperations<String, String, String> hashOps = redisTemplate.opsForHash();
-        CountDownLatch cdl = new CountDownLatch(1);
-
         List<Coffee> list = jdbcTemplate.query(
                 "select * from t_coffee", (rs, i) ->
                 Coffee.builder()
@@ -52,15 +55,18 @@ public class RedisDemoApplication implements ApplicationRunner {
                         .build()
         );
 
+        ReactiveHashOperations<String, String, String> hashOps = redisTemplate.opsForHash();
+        CountDownLatch cdl = new CountDownLatch(1);
         Flux.fromIterable(list)
-                .publishOn(Schedulers.single())
+                .publishOn(Schedulers.single()) // 整个操作在单独线程运行
                 .doOnComplete(() -> log.info("list ok"))
-                .flatMap(c -> {
+                .flatMap(c -> { // 放到 Redis（逐步操作）
+                    log.info("Thread: {}", Thread.currentThread());
                     log.info("try to put {},{}", c.getName(), c.getPrice());
                     return hashOps.put(KEY, c.getName(), c.getPrice().toString());
                 })
                 .doOnComplete(() -> log.info("set ok"))
-                .concatWith(redisTemplate.expire(KEY, Duration.ofMinutes(1)))
+                .concatWith(redisTemplate.expire(KEY, Duration.ofMinutes(1))) // 设置有效期（一步操作）
                 .doOnComplete(() -> log.info("expire ok"))
                 .onErrorResume(e -> {
                     log.error("exception {}", e.getMessage());
@@ -68,7 +74,7 @@ public class RedisDemoApplication implements ApplicationRunner {
                 })
                 .subscribe(b -> log.info("Boolean: {}", b),
                         e -> log.error("Exception {}", e.getMessage()),
-                        () -> cdl.countDown());
+                        () -> cdl.countDown()); // cdl.countDown() 用来等到所有线程结束再结束
         log.info("Waiting");
         cdl.await();
     }
