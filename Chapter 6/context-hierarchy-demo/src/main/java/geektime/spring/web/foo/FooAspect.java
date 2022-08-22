@@ -9,6 +9,6 @@ import org.aspectj.lang.annotation.Aspect;
 public class FooAspect {
     @AfterReturning("bean(testBean*)")
     public void printAfter() {
-        log.info("after hello()");
+        log.info("after hello() from Aspect.");
     }
 }

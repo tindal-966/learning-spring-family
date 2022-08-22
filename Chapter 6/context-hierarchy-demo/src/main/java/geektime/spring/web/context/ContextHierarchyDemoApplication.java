@@ -21,16 +21,18 @@ public class ContextHierarchyDemoApplication implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		ApplicationContext fooContext = new AnnotationConfigApplicationContext(FooConfig.class);
-		ClassPathXmlApplicationContext barContext = new ClassPathXmlApplicationContext(
-				new String[] {"applicationContext.xml"}, fooContext);
 		TestBean bean = fooContext.getBean("testBeanX", TestBean.class);
 		bean.hello();
 
 		log.info("=============");
 
+		ClassPathXmlApplicationContext barContext = new ClassPathXmlApplicationContext(
+				new String[] {"applicationContext.xml"},
+				fooContext); // 第二个参数 fooContext 指定 fooContext 为本 ApplicationContext 的父 ApplicationContext
 		bean = barContext.getBean("testBeanX", TestBean.class);
 		bean.hello();
 
+		// 从 ClassPathXmlApplicationContext 取到实际定义在 AnnotationConfigApplicationContext （父应用程序上下文）里的 Bean
 		bean = barContext.getBean("testBeanY", TestBean.class);
 		bean.hello();
 	}
