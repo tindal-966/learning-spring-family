@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @SpringBootApplication
 @EnableJpaRepositories
-@EnableCaching(proxyTargetClass = true)
+@EnableCaching(proxyTargetClass = true) // 开启缓存（也是基于 AOP 实现）
 public class SpringBucksApplication implements ApplicationRunner {
 	@Autowired
 	private CoffeeService coffeeService;
@@ -29,9 +29,10 @@ public class SpringBucksApplication implements ApplicationRunner {
 		log.info("Count: {}", coffeeService.findAllCoffee().size());
 		for (int i = 0; i < 10; i++) {
 			log.info("Reading from cache.");
-			coffeeService.findAllCoffee();
+			coffeeService.findAllCoffee(); // 这里可以看到 log 不再打印 SQL
 		}
-		coffeeService.reloadCoffee();
+
+		coffeeService.reloadCoffee(); // 手动缓存过期
 		log.info("Reading after refresh.");
 		coffeeService.findAllCoffee().forEach(c -> log.info("Coffee {}", c.getName()));
 	}

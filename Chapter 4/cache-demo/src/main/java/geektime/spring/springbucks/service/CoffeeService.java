@@ -18,17 +18,17 @@ import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatc
 
 @Slf4j
 @Service
-@CacheConfig(cacheNames = "coffee")
+@CacheConfig(cacheNames = "coffee") // 设置缓存
 public class CoffeeService {
     @Autowired
     private CoffeeRepository coffeeRepository;
 
-    @Cacheable
+    @Cacheable // 可缓存
     public List<Coffee> findAllCoffee() {
         return coffeeRepository.findAll();
     }
 
-    @CacheEvict
+    @CacheEvict // 设置缓存过期（手动调用使过期）
     public void reloadCoffee() {
     }
 

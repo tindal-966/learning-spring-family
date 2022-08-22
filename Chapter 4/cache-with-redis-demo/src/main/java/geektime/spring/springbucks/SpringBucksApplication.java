@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @SpringBootApplication
 @EnableJpaRepositories
-@EnableCaching(proxyTargetClass = true)
+@EnableCaching(proxyTargetClass = true) // 开启缓存
 public class SpringBucksApplication implements ApplicationRunner {
 	@Autowired
 	private CoffeeService coffeeService;
@@ -29,9 +29,10 @@ public class SpringBucksApplication implements ApplicationRunner {
 		log.info("Count: {}", coffeeService.findAllCoffee().size());
 		for (int i = 0; i < 5; i++) {
 			log.info("Reading from cache.");
-			coffeeService.findAllCoffee();
+			coffeeService.findAllCoffee(); // 因为缓存，这里可以看到 log 不再打印 SQL 语句
 		}
-		Thread.sleep(5_000);
+
+		Thread.sleep(5_000); // 休眠 5000 毫秒等待缓存自动过期，配置文件中配置了过期时间
 		log.info("Reading after refresh.");
 		coffeeService.findAllCoffee().forEach(c -> log.info("Coffee {}", c.getName()));
 	}
