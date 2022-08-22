@@ -22,12 +22,13 @@ import java.util.Date;
 @SpringBootApplication
 @EnableMongoRepositories
 public class MongoRepositoryDemoApplication implements CommandLineRunner {
-	@Autowired
-	private CoffeeRepository coffeeRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MongoRepositoryDemoApplication.class, args);
 	}
+
+	@Autowired
+	private CoffeeRepository coffeeRepository; // 使用 MongoRepository 而不是 MongoTemplate 来操作
 
 	@Bean
 	public MongoCustomConversions mongoCustomConversions() {
@@ -48,15 +49,14 @@ public class MongoRepositoryDemoApplication implements CommandLineRunner {
 				.updateTime(new Date()).build();
 
 		coffeeRepository.insert(Arrays.asList(espresso, latte));
-		coffeeRepository.findAll(Sort.by("name"))
+		coffeeRepository.findAll(Sort.by("name")) // 这里的 Sort
 				.forEach(c -> log.info("Saved Coffee {}", c));
 
 		Thread.sleep(1000);
 		latte.setPrice(Money.of(CurrencyUnit.of("CNY"), 35.0));
 		latte.setUpdateTime(new Date());
 		coffeeRepository.save(latte);
-		coffeeRepository.findByName("latte")
-				.forEach(c -> log.info("Coffee {}", c));
+		coffeeRepository.findByName("latte").forEach(c -> log.info("Coffee {}", c));
 
 		coffeeRepository.deleteAll();
 	}

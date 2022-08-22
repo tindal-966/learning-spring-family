@@ -28,15 +28,16 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 @SpringBootApplication
 @Slf4j
 public class MongoDemoApplication implements ApplicationRunner {
-	@Autowired
-	private MongoTemplate mongoTemplate;
 
 	public static void main(String[] args) {
 		SpringApplication.run(MongoDemoApplication.class, args);
 	}
 
+	@Autowired
+	private MongoTemplate mongoTemplate;
+
 	@Bean
-	public MongoCustomConversions mongoCustomConversions() {
+	public MongoCustomConversions mongoCustomConversions() { // 注册 Converter Bean
 		return new MongoCustomConversions(Arrays.asList(new MoneyReadConverter()));
 	}
 
@@ -49,9 +50,16 @@ public class MongoDemoApplication implements ApplicationRunner {
 				.updateTime(new Date()).build();
 		Coffee saved = mongoTemplate.save(espresso);
 		log.info("Coffee {}", saved);
+		/*
+		Money 类的保存格式如下：
+		{
+		  "currency": { "code": "CNY", "numericCode": 156, "decimalPlaces": 2 },
+		  "amount": "20.00"
+		 }
+		 */
 
 		List<Coffee> list = mongoTemplate.find(
-				Query.query(Criteria.where("name").is("espresso")), Coffee.class);
+				Query.query(Criteria.where("name").is("espresso")), Coffee.class); // 注意这里的条件查询
 		log.info("Find {} Coffee", list.size());
 		list.forEach(c -> log.info("Coffee {}", c));
 

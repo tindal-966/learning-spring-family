@@ -5,6 +5,9 @@ import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 import org.springframework.core.convert.converter.Converter;
 
+/**
+ * Joda-Money 类在 spring-boot-starter-data-mongodb 的转换
+ */
 public class MoneyReadConverter implements Converter<Document, Money> {
     @Override
     public Money convert(Document source) {

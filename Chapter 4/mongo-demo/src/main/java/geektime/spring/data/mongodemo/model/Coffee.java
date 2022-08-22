@@ -10,13 +10,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-@Document
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Document // 指明为 MongoDB 的 Doc
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class Coffee {
-    @Id
+    @Id // 这里的 ID 是 org.springframework.data.annotation.Id，RDBMS 中常用 javax.persistence.Id
     private String id;
     private String name;
     private Money price;
