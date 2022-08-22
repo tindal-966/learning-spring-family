@@ -25,7 +25,7 @@ public class PerformanceAspect {
             throw t;
         } finally {
             long endTime = System.currentTimeMillis();
-            log.info("{};{};{}ms", name, result, endTime - startTime);
+            log.info("PerformanceAspect {};{};{}ms", name, result, endTime - startTime); // 打印执行结果、执行时间
         }
     }
 

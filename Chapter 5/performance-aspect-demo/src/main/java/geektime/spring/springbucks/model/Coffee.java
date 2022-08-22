@@ -16,8 +16,8 @@ import java.io.Serializable;
 @Entity
 @Table(name = "T_COFFEE")
 @Builder
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true) // 注意
+@ToString(callSuper = true) // 注意
 @NoArgsConstructor
 @AllArgsConstructor
 public class Coffee extends BaseEntity implements Serializable {
