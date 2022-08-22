@@ -28,19 +28,22 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 @SpringBootApplication
 @Slf4j
 public class MongodbDemoApplication implements ApplicationRunner {
-	@Autowired
-	private ReactiveMongoTemplate mongoTemplate;
-	private CountDownLatch cdl = new CountDownLatch(2);
 
 	public static void main(String[] args) {
 		SpringApplication.run(MongodbDemoApplication.class, args);
 	}
 
+	@Autowired
+	private ReactiveMongoTemplate mongoTemplate;
+
+	private CountDownLatch cdl = new CountDownLatch(2);
+
+	/**
+	 * 初始化 Converter
+	 */
 	@Bean
 	public MongoCustomConversions mongoCustomConversions() {
-		return new MongoCustomConversions(
-				Arrays.asList(new MoneyReadConverter(),
-						new MoneyWriteConverter()));
+		return new MongoCustomConversions(Arrays.asList(new MoneyReadConverter(), new MoneyWriteConverter()));
 	}
 
 	@Override
@@ -51,33 +54,34 @@ public class MongodbDemoApplication implements ApplicationRunner {
 			decreaseHighPrice();
 		});
 
-		log.info("after starting");
+		log.info("after starting"); // 最先打印，比 "Runnable" 还早
 
-//		decreaseHighPrice();
+//		decreaseHighPrice(); // 如果直接解开这里的注释，这里会比 startFromInsertion 先执行
 
 		cdl.await();
 	}
 
 	private void startFromInsertion(Runnable runnable) {
 		mongoTemplate.insertAll(initCoffee())
-				.publishOn(Schedulers.elastic())
-				.doOnNext(c -> log.info("Next: {}", c))
-				.doOnComplete(runnable)
+				.publishOn(Schedulers.elastic()) // 整个操作在 elastic 线程池操作
+				.doOnNext(c -> log.info("Next: {}", c)) // 每次执行之后都打印一下
+				.doOnComplete(runnable) // 完成时执行（会先打印 runnable 里的 log "Runnable" 再是 "Finally"）
 				.doFinally(s -> {
 					cdl.countDown();
-					log.info("Finnally 1, {}", s);
+					log.info("Finally 1, {}", s);
 				})
-				.count()
-				.subscribe(c -> log.info("Insert {} records", c));
+				.count() // doFinally 返回 Flux 对象，这里对该对象计数
+				.subscribe(c -> log.info("Insert {} records", c)); // 会比 "Finally" 先打印
 	}
 
 	private void decreaseHighPrice() {
-		mongoTemplate.updateMulti(query(where("price").gte(3000L)),
-				new Update().inc("price", -500L)
-						.currentDate("updateTime"), Coffee.class)
+		mongoTemplate.updateMulti(
+						query(where("price").gte(3000L)),
+						new Update().inc("price", -500L).currentDate("updateTime"),
+						Coffee.class)
 				.doFinally(s -> {
 					cdl.countDown();
-					log.info("Finnally 2, {}", s);
+					log.info("Finally 2, {}", s); // 如果是在 startFromInsertion 中执行，会先打印 Finally 1
 				})
 				.subscribe(r -> log.info("Result is {}", r));
 	}
