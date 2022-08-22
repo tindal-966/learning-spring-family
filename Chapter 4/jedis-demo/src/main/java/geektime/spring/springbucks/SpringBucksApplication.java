@@ -25,33 +25,39 @@ import java.util.Map;
 @SpringBootApplication
 @EnableJpaRepositories
 public class SpringBucksApplication implements ApplicationRunner {
-	@Autowired
-	private CoffeeService coffeeService;
-	@Autowired
-	private JedisPool jedisPool;
-	@Autowired
-	private JedisPoolConfig jedisPoolConfig;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBucksApplication.class, args);
 	}
 
+	@Autowired
+	private CoffeeService coffeeService;
+	@Autowired
+	private JedisPool jedisPool; // 这里注入 JedisPool
+	@Autowired
+	private JedisPoolConfig jedisPoolConfig; // 这里注入 JedisPoolConfig
+
+	/**
+	 * 初始化 JedisPoolConfig Bean
+	 */
 	@Bean
-	@ConfigurationProperties("redis")
+	@ConfigurationProperties("redis") // 使用配置文件中 redis 开头的配置
 	public JedisPoolConfig jedisPoolConfig() {
 		return new JedisPoolConfig();
 	}
-
+	/**
+	 * 初始化 JedisPool Bean
+	 */
 	@Bean(destroyMethod = "close")
 	public JedisPool jedisPool(@Value("${redis.host}") String host) {
-		return new JedisPool(jedisPoolConfig(), host);
+		return new JedisPool(jedisPoolConfig(), host); // 这里用了上面初始化的 JedisPoolConfig
 	}
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		log.info(jedisPoolConfig.toString());
 
-		try (Jedis jedis = jedisPool.getResource()) {
+		try (Jedis jedis = jedisPool.getResource()) { // 从 jedisPool 获取资源来操作 Redis
 			coffeeService.findAllCoffee().forEach(c -> {
 				jedis.hset("springbucks-menu",
 						c.getName(),
