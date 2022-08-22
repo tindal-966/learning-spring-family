@@ -20,6 +20,9 @@ public class CoffeeService {
     @Autowired
     private ReactiveRedisTemplate<String, Coffee> redisTemplate;
 
+    /**
+     * 初始化缓存
+     */
     public Flux<Boolean> initCache() {
         return coffeeRepository.findAll()
                 .flatMap(c -> redisTemplate.opsForValue()
@@ -29,7 +32,7 @@ public class CoffeeService {
     }
 
     public Mono<Coffee> findOneCoffee(String name) {
-        return redisTemplate.opsForValue().get(PREFIX + name)
+        return redisTemplate.opsForValue().get(PREFIX + name) // 先找缓存再找 RDBMS
                 .switchIfEmpty(coffeeRepository.findByName(name)
                         .doOnSuccess(s -> log.info("Loading {} from DB.", name)));
     }

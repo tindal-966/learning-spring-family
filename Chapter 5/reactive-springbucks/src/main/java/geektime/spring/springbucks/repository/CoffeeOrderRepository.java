@@ -9,6 +9,9 @@ import reactor.core.publisher.Mono;
 
 import java.sql.Timestamp;
 
+/**
+ * 手写的 E2dbcRepository（使用 DatabaseClient 实现）
+ */
 @Repository
 public class CoffeeOrderRepository {
     @Autowired

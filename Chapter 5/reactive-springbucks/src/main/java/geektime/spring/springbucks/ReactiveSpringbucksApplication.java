@@ -50,6 +50,9 @@ public class ReactiveSpringbucksApplication extends AbstractR2dbcConfiguration {
                 Arrays.asList(new MoneyReadConverter(), new MoneyWriteConverter()));
     }
 
+    /**
+     * 使用 JSON 格式保存到 Redis
+     */
     @Bean
     public ReactiveRedisTemplate<String, Coffee> reactiveRedisTemplate(ReactiveRedisConnectionFactory factory) {
         StringRedisSerializer keySerializer = new StringRedisSerializer();

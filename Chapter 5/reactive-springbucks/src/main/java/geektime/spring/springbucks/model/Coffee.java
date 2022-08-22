@@ -24,9 +24,11 @@ public class Coffee implements Serializable {
     @Id
     private Long id;
     private String name;
+
     @JsonSerialize(using = MoneySerializer.class)
     @JsonDeserialize(using = MoneyDeserializer.class)
     private Money price;
+
     private Date createTime;
     private Date updateTime;
 }
