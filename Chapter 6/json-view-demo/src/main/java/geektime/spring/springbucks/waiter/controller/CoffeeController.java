@@ -103,10 +103,10 @@ public class CoffeeController {
         return coffeeService.getAllCoffee();
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET) // 不指定 consumes 和 produces，允许返回 json/xml 格式
     @ResponseBody
     public Coffee getById(@PathVariable Long id) {
-        Coffee coffee = coffeeService.getCoffee(id);
+        Coffee coffee = coffeeService.getCoffee(id); // 注意：如果 response-type 为 xml，这里显示的是 Hibernate 对 Coffee 的代理类型，原因见下面
         log.info("Coffee {}:", coffee);
         return coffee;
     }
@@ -114,6 +114,8 @@ public class CoffeeController {
     @GetMapping(path = "/", params = "name")
     @ResponseBody
     public Coffee getByName(@RequestParam String name) {
-        return coffeeService.getCoffee(name);
+        return coffeeService.getCoffee(name); // 注意：如果 response-type 为 xml，这里显示的就是 Coffee 类型，原因见下面
     }
+
+    // 两个返回一个是原始类型，一个是代理类型的原因：JpaRepository.getOne() 走的是 DefaultLoadEventListener.proxyOrLoad()，这里返回代理对象。getByName() 是我们自定义的，走了 Spring Data JPA 的 Repository 另外的一条生成 Query 的分支，没有再做代理
 }

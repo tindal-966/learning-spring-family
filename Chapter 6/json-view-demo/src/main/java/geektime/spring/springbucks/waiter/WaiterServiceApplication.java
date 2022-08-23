@@ -17,13 +17,18 @@ public class WaiterServiceApplication {
 		SpringApplication.run(WaiterServiceApplication.class, args);
 	}
 
+	/**
+	 * 初始化 Hibernate5Module
+	 *
+	 * 有趣的文章：https://www.hiczp.com/spring/zai-springboot-zhong-zheng-que-zhu-ce-jacksonmodule.html
+	 */
 	@Bean
 	public Hibernate5Module hibernate5Module() {
 		return new Hibernate5Module();
 	}
 
-//	@Bean
-//	public Jackson2ObjectMapperBuilderCustomizer jacksonBuilderCustomizer() {
-//		return builder -> builder.indentOutput(true);
-//	}
+	@Bean
+	public Jackson2ObjectMapperBuilderCustomizer jacksonBuilderCustomizer() {
+		return builder -> builder.indentOutput(true); // 配置 JSON 格式的缩进
+	}
 }

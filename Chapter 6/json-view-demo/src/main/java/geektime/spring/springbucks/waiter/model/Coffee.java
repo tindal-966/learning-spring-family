@@ -23,6 +23,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Coffee extends BaseEntity implements Serializable {
     private String name;
+
     @Type(type = "org.jadira.usertype.moneyandcurrency.joda.PersistentMoneyMinorAmount",
             parameters = {@org.hibernate.annotations.Parameter(name = "currencyCode", value = "CNY")})
     private Money price;
