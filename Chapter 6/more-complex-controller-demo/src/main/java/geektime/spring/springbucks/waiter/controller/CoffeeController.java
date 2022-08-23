@@ -41,11 +41,11 @@ public class CoffeeController {
     @Autowired
     private CoffeeService coffeeService;
 
-    @PostMapping(path = "/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(path = "/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE) // 默认就是这个 consumes，因为后面也有 / 的路由，需要区分
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    public Coffee addCoffee(@Valid NewCoffeeRequest newCoffee,
-                            BindingResult result) {
+    public Coffee addCoffee(@Valid NewCoffeeRequest newCoffee, // 校验 NewCoffeeRequest
+                            BindingResult result) { // 这里使用 BindingResult 表示自己处理出错，返回状态码还是 204 create，响应没内容；不使用的话会 400 Bae Request
         if (result.hasErrors()) {
             // 这里先简单处理一下，后续讲到异常处理时会改
             log.warn("Binding Errors: {}", result);

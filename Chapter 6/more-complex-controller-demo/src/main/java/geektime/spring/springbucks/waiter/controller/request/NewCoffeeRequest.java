@@ -12,8 +12,9 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ToString
 public class NewCoffeeRequest {
-    @NotEmpty
+    @NotEmpty // 不允许为空
     private String name;
-    @NotNull
+
+    @NotNull // 不允许为 null
     private Money price;
 }
