@@ -101,10 +101,10 @@ public class CoffeeController {
     @RequestMapping(path = "/{id}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public ResponseEntity<Coffee> getById(@PathVariable Long id) {
+    public ResponseEntity<Coffee> getById(@PathVariable Long id) { // 返回 ResponseEntity
         Coffee coffee = coffeeService.getCoffee(id);
         return ResponseEntity.ok()
-                .cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
+                .cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS)) // 设置缓存
                 .body(coffee);
     }
 
