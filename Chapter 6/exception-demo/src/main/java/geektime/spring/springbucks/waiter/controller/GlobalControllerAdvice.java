@@ -12,6 +12,11 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalControllerAdvice {
+    /**
+     * 异常处理器
+     *
+     * 抛出 ValidationException 时，HttpStatus 设置为 400，返回特定的 map 内容
+     */
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String, String> validationExceptionHandler(ValidationException exception) {

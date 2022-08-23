@@ -48,7 +48,7 @@ public class CoffeeController {
                             BindingResult result) {
         if (result.hasErrors()) {
             log.warn("Binding Errors: {}", result);
-            throw new FormValidationException(result);
+            throw new FormValidationException(result); // 抛出异常
         }
         return coffeeService.saveCoffee(newCoffee.getName(), newCoffee.getPrice());
     }
@@ -60,7 +60,7 @@ public class CoffeeController {
                                 BindingResult result) {
         if (result.hasErrors()) {
             log.warn("Binding Errors: {}", result);
-            throw new ValidationException(result.toString());
+            throw new ValidationException(result.toString()); // 抛出异常
         }
         return coffeeService.saveCoffee(newCoffee.getName(), newCoffee.getPrice());
     }
