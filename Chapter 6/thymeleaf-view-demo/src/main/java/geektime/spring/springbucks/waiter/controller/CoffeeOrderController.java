@@ -51,14 +51,14 @@ public class CoffeeOrderController {
         return orderService.createOrder(newOrder.getCustomer(), coffeeList);
     }
 
-    @ModelAttribute
+    @ModelAttribute // 被 Thymeleaf Page 调用
     public List<Coffee> coffeeList() {
         return coffeeService.getAllCoffee();
     }
 
     @GetMapping(path = "/")
     public ModelAndView showCreateForm() {
-        return new ModelAndView("create-order-form");
+        return new ModelAndView("create-order-form"); // 返回 Thymeleaf 页面
     }
 
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -66,14 +66,14 @@ public class CoffeeOrderController {
                                     BindingResult result, ModelMap map) {
         if (result.hasErrors()) {
             log.warn("Binding Result: {}", result);
-            map.addAttribute("message", result.toString());
-            return "create-order-form";
+            map.addAttribute("message", result.toString()); // 在 Thymeleaf Page 显示错误内容
+            return "create-order-form"; // 跳转页面
         }
 
         log.info("Receive new Order {}", newOrder);
         Coffee[] coffeeList = coffeeService.getCoffeeByName(newOrder.getItems())
                 .toArray(new Coffee[] {});
         CoffeeOrder order = orderService.createOrder(newOrder.getCustomer(), coffeeList);
-        return "redirect:/order/" + order.getId();
+        return "redirect:/order/" + order.getId(); // 重定向
     }
 }

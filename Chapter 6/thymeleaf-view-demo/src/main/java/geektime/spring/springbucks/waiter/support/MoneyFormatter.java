@@ -33,7 +33,7 @@ public class MoneyFormatter implements Formatter<Money> {
     }
 
     @Override
-    public String print(Money money, Locale locale) {
+    public String print(Money money, Locale locale) { // 会被 Thymeleaf 的页面渲染时调用
         if (money == null) {
             return null;
         }

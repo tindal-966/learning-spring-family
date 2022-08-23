@@ -9,9 +9,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="coffee : ${coffeeList}">
+                <tr th:each="coffee : ${coffeeList}"> <!-- 这里的 coffeeList 是 CoffeeOrderController#coffeeList 这个 @ModelAttribute 注解标注的类 -->
                     <td th:text="${coffee.name}">Espresso</td>
-                    <td th:text="${coffee.price}">CNY 12.0</td>
+                    <td th:text="${coffee.price}">CNY 12.0</td> <!-- 这里会调用 MoneyFormatter 的 print 方法 -->
                 </tr>
             </tbody>
         </table>
